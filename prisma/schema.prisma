@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Search {
+  id              String    @id @default(cuid())
+  title           String
+  prompt          String
+  category        String    @default("pañales")
+  size            String?
+  brand           String?
+  minimumQuantity Int?
+  maxPriceCents   Int?
+  preferredStores String[]
+  active          Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  offers          Offer[]
+  runs            Run[]
+}
+
+model Offer {
+  id              String   @id @default(cuid())
+  searchId        String
+  title           String
+  url             String
+  retailer        String
+  priceCents      Int?
+  unitPriceCents  Int?
+  currency        String   @default("EUR")
+  brand           String?
+  size            String?
+  quantity        Int?
+  availability    String   @default("unknown")
+  confidence      String   @default("medium")
+  evidence        Json
+  relevanceReason String
+  status          String   @default("new")
+  firstSeenAt     DateTime @default(now())
+  lastSeenAt      DateTime @default(now())
+  sentAt          DateTime?
+  search          Search   @relation(fields: [searchId], references: [id], onDelete: Cascade)
+
+  @@unique([searchId, url])
+  @@index([status, lastSeenAt])
+}
+
+model Run {
+  id           String    @id @default(cuid())
+  searchId     String?
+  status       String
+  startedAt    DateTime  @default(now())
+  finishedAt   DateTime?
+  candidates   Int       @default(0)
+  newOffers    Int       @default(0)
+  errorMessage String?
+  search       Search?   @relation(fields: [searchId], references: [id], onDelete: SetNull)
+
+  @@index([startedAt])
+}
+
+model EmailDelivery {
+  id          String   @id @default(cuid())
+  runId       String?
+  recipient   String
+  status      String
+  providerId  String?
+  errorMessage String?
+  createdAt   DateTime @default(now())
+}
