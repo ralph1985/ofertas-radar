@@ -54,6 +54,9 @@ h2 { margin: 0; font-size: 20px; letter-spacing: -.035em; }
 .offer-price { white-space: nowrap; color: var(--accent-dark); font-size: 16px; font-weight: 800; }
 .offer p { margin: 10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
 .offer a { display: inline-block; margin-top: 13px; color: var(--accent-dark); font-size: 12px; font-weight: 700; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.pagination { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; color: var(--muted); font-size: 12px; }
+.pagination a { color: var(--accent-dark); font-weight: 700; text-decoration: none; }
+.pagination a.disabled { pointer-events: none; color: var(--line-strong); }
 .empty { padding: 32px 24px; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .empty strong { display: block; margin-bottom: 6px; color: var(--ink); font-size: 16px; }
 .primary-button { border: 0; border-radius: 999px; padding: 12px 17px; color: #fff; background: var(--accent-dark); font-weight: 750; box-shadow: 0 7px 14px rgba(20,82,62,.16); }
