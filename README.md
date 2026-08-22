@@ -94,6 +94,8 @@ bash scripts/install-cron.sh
 
 El instalador usa `flock` para impedir ejecuciones simultáneas. El log queda en `var/log/worker.cron.log`.
 
+El mismo instalador configura una copia PostgreSQL cada seis horas con `pg_dump`. Los SQL se guardan localmente en `var/backups/prisma-postgres`, con permisos restrictivos y una retención de 14 días. El log del backup queda en `var/log/prisma-postgres-backup.log`. Estos archivos están excluidos de Git.
+
 ## Despliegue
 
 El frontal se despliega en Vercel desde GitHub. Las variables necesarias para Next.js deben configurarse en Vercel; el worker y sus credenciales SMTP se ejecutan en el equipo local configurado para el cron.
