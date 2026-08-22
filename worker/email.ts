@@ -11,5 +11,5 @@ export async function sendDigest(subject: string, html: string, text: string) {
   if (!password || !from || to.length === 0) throw new Error("Faltan RADAR_SMTP_PASSWORD, RADAR_FROM o RADAR_RECIPIENTS.");
   const transporter = nodemailer.createTransport({ host, port, secure, auth: { user, pass: password } });
   const response = await transporter.sendMail({ from, to, subject, text, html });
-  return { id: response.messageId };
+  return { id: response.messageId, recipients: to.length };
 }
