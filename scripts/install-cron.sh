@@ -21,8 +21,8 @@ PATH=$PATH_VALUE
 0 7 * * * cd $ROOT && /usr/bin/flock -n $ROOT/var/ofertas-radar.lock $PNPM_BIN worker >> $LOG_DIR/worker.cron.log 2>&1
 $END
 $BACKUP_BEGIN
-0 */6 * * * /usr/bin/flock -n /tmp/ofertas-radar-prisma-postgres-backup.lock $NODE_BIN $ROOT/scripts/backup-prisma-postgres.mjs >> $LOG_DIR/prisma-postgres-backup.log 2>&1
+0 0 * * * /usr/bin/flock -n /tmp/ofertas-radar-prisma-postgres-backup.lock $NODE_BIN $ROOT/scripts/backup-prisma-postgres.mjs >> $LOG_DIR/prisma-postgres-backup.log 2>&1
 $BACKUP_END
 EOF
 crontab "$TMP"
-echo "Cron instalado para Ofertas Radar: worker a las 07:00 y backup cada 6 horas (zona horaria del sistema)."
+echo "Cron instalado para Ofertas Radar: backup a las 00:00 y worker a las 07:00 (zona horaria del sistema)."
